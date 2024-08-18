@@ -21,7 +21,7 @@ class AdminController extends Controller
         $db = \Yii::$app->db;
 
         // check this username is already exists
-        $exists = $db->createCommand('SELECT id FROM users WHERE username = :username', [':username' => $username])->queryScalar();
+        $exists = $db->createCommand('SELECT id FROM user WHERE username = :username', [':username' => $username])->queryScalar();
         if ($exists) {
             $this->stderr("Admin with username $username already exists\n");
             return;
@@ -29,7 +29,7 @@ class AdminController extends Controller
 
         $transaction = $db->beginTransaction();
         try {
-            $db->createCommand()->insert('users', [
+            $db->createCommand()->insert('user', [
                 'username'      => $username,
                 'password_hash' => $password_hash,
                 'auth_key'      => $auth_key,
